@@ -70,7 +70,15 @@ export const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center">
-          <Button variant="primary" size="md" withGlow>
+          <Button 
+            variant="primary" 
+            size="md" 
+            withGlow
+            onClick={() => {
+              const contactSection = document.getElementById('contact-section');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
             Contact Us
           </Button>
         </div>

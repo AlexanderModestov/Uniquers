@@ -19,7 +19,7 @@ const ContactForm = () => {
 
 export const CTASection = () => {
   return (
-    <section className="py-20 bg-background relative overflow-hidden">
+    <section id="contact-section" className="py-20 bg-background relative overflow-hidden">
       {/* Animated gradient background */}
       <div className="absolute inset-0 bg-radial-gradient from-primary-500/10 to-background z-0"></div>
 
