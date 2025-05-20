@@ -70,8 +70,12 @@ export const HeroSection = () => {
               withGlow 
               icon={<ChevronRight className="h-5 w-5" />}
               iconPosition="right"
+              onClick={() => {
+                const contactSection = document.getElementById('contact-section');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
-              Get Started Free
+              Contact Us
             </Button>
             <Button variant="outline" size="lg">
               Watch Demo
