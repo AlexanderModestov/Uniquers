@@ -41,11 +41,10 @@ export const CTASection = () => {
         >
           <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-              Ready to Monetize Your Knowledge?
+              Get Early Access
             </h2>
             <p className="text-neutral-400 mb-8">
-              Join thousands of experts who have transformed their practice with Uniquers.
-              Start automating and earning today.
+              Join Uniquers Today
             </p>
             <ContactForm />
           </div>
