@@ -70,17 +70,7 @@ export const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center">
-          <Button 
-            variant="primary" 
-            size="md" 
-            withGlow
-            onClick={() => {
-              const contactSection = document.getElementById('contact-section');
-              contactSection?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Contact Us
-          </Button>
+          {/* Contact button removed */}
         </div>
 
         {/* Mobile Menu Button */}
