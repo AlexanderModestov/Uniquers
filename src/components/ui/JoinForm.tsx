@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from './Button';
 
@@ -11,16 +10,44 @@ export const JoinForm = () => {
     keepUpdated: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitStatus, setSubmitStatus] = useState({
+    success: false,
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
-    console.log('Form submitted:', formData);
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setSubmitStatus({ success: true, message: 'Request sent successfully!' });
+        setFormData({
+          fullName: '',
+          email: '',
+          company: '',
+          interests: '',
+          keepUpdated: false
+        }); // Clear the form
+      } else {
+        const errorData = await response.json();
+        setSubmitStatus({ success: false, message: `Failed to send request: ${errorData.error || response.statusText}` });
+      }
+    } catch (error: any) {
+      setSubmitStatus({ success: false, message: `An error occurred: ${error.message}` });
+    }
   };
 
   return (
     <div className="w-full max-w-xl mx-auto bg-neutral-900/50 p-8 rounded-xl border border-neutral-800">
       <h2 className="text-3xl font-display font-bold text-center mb-8">Get Early Access</h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block mb-2">Full Name</label>
@@ -76,6 +103,11 @@ export const JoinForm = () => {
           <label htmlFor="keepUpdated">Keep me updated about Uniquers</label>
         </div>
 
+        {submitStatus.message && (
+          <div className={`text-center p-3 rounded ${submitStatus.success ? 'bg-success-500/20 text-success-400' : 'bg-error-500/20 text-error-400'}`}>
+            {submitStatus.message}
+          </div>
+        )}
         <Button type="submit" variant="primary" className="w-full" withGlow>
           Join Uniquers Today
         </Button>
