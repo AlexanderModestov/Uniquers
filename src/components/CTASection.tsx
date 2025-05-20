@@ -1,18 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-// ContactForm component (replace with your actual form)
+const contactFormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  message: z.string().min(10, { message: "Please provide some details about your needs" })
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 const ContactForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: ""
+    }
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    try {
+      // TODO: Replace with your actual API endpoint
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      form.reset();
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-4">
-      <input type="text" placeholder="Your Name" className="p-2 rounded bg-neutral-800 text-white" />
-      <input type="email" placeholder="Your Email" className="p-2 rounded bg-neutral-800 text-white" />
-      <textarea placeholder="Your Message" className="p-2 rounded bg-neutral-800 text-white"></textarea>
-      <Button variant="primary" size="lg" withGlow>
-        Submit
+    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <div>
+        <input
+          {...form.register('name')}
+          type="text"
+          placeholder="Your Name"
+          className="w-full p-2 rounded bg-neutral-800 text-white border border-neutral-700 focus:border-primary-500 focus:outline-none"
+        />
+        {form.formState.errors.name && (
+          <p className="text-red-500 text-sm mt-1">{form.formState.errors.name.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...form.register('email')}
+          type="email"
+          placeholder="Your Email"
+          className="w-full p-2 rounded bg-neutral-800 text-white border border-neutral-700 focus:border-primary-500 focus:outline-none"
+        />
+        {form.formState.errors.email && (
+          <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
+        )}
+      </div>
+
+      <div>
+        <textarea
+          {...form.register('message')}
+          placeholder="Your Message"
+          className="w-full p-2 rounded bg-neutral-800 text-white border border-neutral-700 focus:border-primary-500 focus:outline-none resize-none"
+          rows={4}
+        />
+        {form.formState.errors.message && (
+          <p className="text-red-500 text-sm mt-1">{form.formState.errors.message.message}</p>
+        )}
+      </div>
+
+      <Button 
+        type="submit" 
+        variant="primary" 
+        size="lg" 
+        withGlow
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Sending..." : "Submit"}
       </Button>
+
+      {showSuccess && (
+        <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 text-green-400 rounded-lg">
+          Thanks! We'll get back to you within 24 hours.
+        </div>
+      )}
     </form>
   );
 };
