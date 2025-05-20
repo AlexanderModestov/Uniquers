@@ -26,4 +26,4 @@ args = "npm run dev"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx ts-node src/server.ts"
+args = "npx ts-node-dev --respawn src/server.ts"

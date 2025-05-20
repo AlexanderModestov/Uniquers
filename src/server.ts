@@ -2,8 +2,12 @@
 import express from 'express';
 import { createContactsTable, saveContact } from './utils/db';
 import { ViteDevServer } from 'vite';
+import cors from 'cors';
+import { config } from 'dotenv';
 
+config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Enable CORS for development
