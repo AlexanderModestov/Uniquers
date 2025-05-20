@@ -6,12 +6,16 @@ import { config } from 'dotenv';
 
 config();
 const app = express();
-app.use(cors({
-  origin: '*',
-  methods: ['POST', 'GET', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+app.use(cors());
 app.use(express.json());
+
+// Enable CORS for development
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'POST');
+  next();
+});
 
 export const createServer = async (vite?: ViteDevServer) => {
   // Initialize database
