@@ -47,12 +47,14 @@ export const ContactForm = () => {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto"
+      className="w-full max-w-md mx-auto space-y-6"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
+      <h2 className="text-2xl font-bold text-center mb-8">Get Early Access</h2>
+      
       <div className="space-y-4">
         <div>
           <label className="block text-left mb-2">Full Name</label>
@@ -62,9 +64,10 @@ export const ContactForm = () => {
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
-            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-200 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
+
         <div>
           <label className="block text-left mb-2">Email</label>
           <input
@@ -73,9 +76,10 @@ export const ContactForm = () => {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
-            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-200 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
+
         <div>
           <label className="block text-left mb-2">Company (Optional)</label>
           <input
@@ -83,9 +87,10 @@ export const ContactForm = () => {
             placeholder="Your company name"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-200 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
+
         <div>
           <label className="block text-left mb-2">What interests you about Uniquers? (Optional)</label>
           <textarea
@@ -93,21 +98,22 @@ export const ContactForm = () => {
             value={formData.interests}
             onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
             rows={4}
-            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
+            className="w-full px-4 py-3 rounded-lg border border-neutral-200 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
-        <div className="flex items-center gap-2">
+
+        <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={formData.newsletter}
             onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
-            className="w-4 h-4 rounded"
+            className="w-5 h-5 rounded border-neutral-200 text-primary-500 focus:ring-primary-500"
           />
-          <label>Keep me updated about Uniquers</label>
-        </div>
+          <span>Keep me updated about Uniquers</span>
+        </label>
         
         {status.message && (
-          <div className={`p-3 rounded-lg ${status.isError ? 'bg-red-500/20 text-red-200' : 'bg-green-500/20 text-green-200'}`}>
+          <div className={`p-3 rounded-lg ${status.isError ? 'bg-red-500/20 text-red-600' : 'bg-green-500/20 text-green-600'}`}>
             {status.message}
           </div>
         )}
@@ -116,7 +122,7 @@ export const ContactForm = () => {
           type="submit"
           variant="primary"
           size="lg"
-          className="w-full bg-gradient-to-r from-[#7C5CFC] to-[#31B7F0]"
+          className="w-full bg-gradient-to-r from, from-[#6366F1] to-[#3B82F6] hover:opacity-90"
           icon={<ArrowRight className="h-5 w-5" />}
           iconPosition="right"
         >
