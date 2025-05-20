@@ -35,8 +35,10 @@ export const saveContact = async (data: {
   interests?: string;
   newsletter: boolean;
 }) => {
+  console.log('Attempting to save contact:', data);
   const client = await pool.connect();
   try {
+    console.log('Connected to database successfully');
     const result = await client.query(
       `INSERT INTO contacts (name, email, company, interests, newsletter)
        VALUES ($1, $2, $3, $4, $5)

@@ -5,6 +5,12 @@ import cors from 'cors';
 import { config } from 'dotenv';
 
 config();
+
+if (!process.env.DATABASE_URL) {
+  console.error('DATABASE_URL is not set. Please set it in the Secrets tab.');
+  process.exit(1);
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json());
