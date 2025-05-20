@@ -13,8 +13,15 @@ export const ContactForm = () => {
     newsletter: true
   });
 
+  const [status, setStatus] = useState({
+    message: '',
+    isError: false
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus({ message: 'Sending...', isError: false });
+    
     try {
       const response = await fetch('/api/contacts', {
         method: 'POST',
@@ -25,14 +32,14 @@ export const ContactForm = () => {
       });
       
       if (response.ok) {
-        alert('Thank you for your interest! We will contact you soon.');
+        setStatus({ message: 'Thank you! Your message has been sent successfully.', isError: false });
         setFormData({ name: '', email: '', company: '', interests: '', newsletter: true });
       } else {
-        alert('Something went wrong. Please try again.');
+        setStatus({ message: 'Failed to send message. Please try again.', isError: true });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Something went wrong. Please try again.');
+      setStatus({ message: 'Failed to send message. Please try again.', isError: true });
     }
   };
 
@@ -97,6 +104,13 @@ export const ContactForm = () => {
           />
           <label>Keep me updated about Uniquers</label>
         </div>
+        
+        {status.message && (
+          <div className={`p-3 rounded-lg ${status.isError ? 'bg-red-500/20 text-red-200' : 'bg-green-500/20 text-green-200'}`}>
+            {status.message}
+          </div>
+        )}
+
         <Button
           type="submit"
           variant="primary"
