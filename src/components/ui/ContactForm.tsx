@@ -32,11 +32,13 @@ export const ContactForm = () => {
         body: JSON.stringify(formData),
       });
       
+      const data = await response.json();
+      
       if (response.ok) {
-        setStatus({ message: 'Thank you! Your message has been sent successfully.', isError: false });
+        setStatus({ message: data.message || 'Thank you! Your message has been sent successfully.', isError: false });
         setFormData({ name: '', email: '', company: '', interests: '', newsletter: true });
       } else {
-        setStatus({ message: 'Failed to send message. Please try again.', isError: true });
+        setStatus({ message: data.error || 'Failed to send message. Please try again.', isError: true });
       }
     } catch (error) {
       console.error('Error submitting form:', error);

@@ -25,8 +25,19 @@ export const createServer = async (vite?: ViteDevServer) => {
   // API routes
   app.post('/api/contacts', async (req, res) => {
     try {
-      const contact = await saveContact(req.body);
-      res.json(contact);
+      const { name, email, company, interests, newsletter } = req.body;
+      
+      if (!name || !email) {
+        return res.status(400).json({ error: 'Name and email are required' });
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: 'Invalid email format' });
+      }
+
+      const contact = await saveContact({ name, email, company, interests, newsletter });
+      res.json({ success: true, message: 'Contact saved successfully', data: contact });
     } catch (error) {
       console.error('Error saving contact:', error);
       res.status(500).json({ error: 'Internal server error' });
