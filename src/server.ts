@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { createContactsTable, saveContact } from './utils/db';
 import { ViteDevServer } from 'vite';
@@ -25,22 +24,27 @@ export const createServer = async (vite?: ViteDevServer) => {
   // API routes
   app.post('/api/contacts', async (req, res) => {
     try {
+      console.log('Received contact form submission:', req.body);
+
       const { name, email, company, interests, newsletter } = req.body;
-      
+
       if (!name || !email) {
+        console.log('Validation failed: Missing name or email');
         return res.status(400).json({ error: 'Name and email are required' });
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
+        console.log('Validation failed: Invalid email format');
         return res.status(400).json({ error: 'Invalid email format' });
       }
 
       const contact = await saveContact({ name, email, company, interests, newsletter });
+      console.log('Contact saved successfully:', contact);
       res.json({ success: true, message: 'Contact saved successfully', data: contact });
     } catch (error) {
       console.error('Error saving contact:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: String(error) });
     }
   });
 

@@ -2,7 +2,11 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/postgres',
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
 });
 
 export const createContactsTable = async () => {
