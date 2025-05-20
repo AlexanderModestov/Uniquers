@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './Button';
+import { request } from 'express';
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: '',
-    interests: '',
-    newsletter: true
+    request: ''
   });
 
   const [status, setStatus] = useState({
