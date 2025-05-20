@@ -34,4 +34,9 @@ if (import.meta.env.PROD) {
   app.listen(5000, '0.0.0.0', () => {
     console.log('Server running on port 5000');
   });
+} else {
+  const app = await createServer();
+  app.listen(5000, '0.0.0.0', () => {
+    console.log('Server running on port 5000');
+  });
 }
