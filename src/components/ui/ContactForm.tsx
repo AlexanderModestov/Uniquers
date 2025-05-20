@@ -1,28 +1,28 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from './Button';
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    company: '',
+    interests: '',
+    newsletter: true
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
     console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: '', email: '', company: '', interests: '', newsletter: true });
   };
 
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="w-full max-w-md"
+      className="w-full max-w-md mx-auto"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -30,43 +30,65 @@ export const ContactForm = () => {
     >
       <div className="space-y-4">
         <div>
+          <label className="block text-left mb-2">Full Name</label>
           <input
             type="text"
-            placeholder="Your Name"
+            placeholder="Enter your name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
-            className="w-full px-4 py-2 bg-neutral-900/40 border border-neutral-800/50 rounded-lg focus:outline-none focus:border-primary-500"
+            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
           />
         </div>
         <div>
+          <label className="block text-left mb-2">Email</label>
           <input
             type="email"
-            placeholder="Your Email"
+            placeholder="Enter your email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
-            className="w-full px-4 py-2 bg-neutral-900/40 border border-neutral-800/50 rounded-lg focus:outline-none focus:border-primary-500"
+            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
           />
         </div>
         <div>
-          <textarea
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            required
-            rows={4}
-            className="w-full px-4 py-2 bg-neutral-900/40 border border-neutral-800/50 rounded-lg focus:outline-none focus:border-primary-500"
+          <label className="block text-left mb-2">Company (Optional)</label>
+          <input
+            type="text"
+            placeholder="Your company name"
+            value={formData.company}
+            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
           />
+        </div>
+        <div>
+          <label className="block text-left mb-2">What interests you about Uniquers? (Optional)</label>
+          <textarea
+            placeholder="Tell us what kind of expertise you'd like to monetize or any questions you have"
+            value={formData.interests}
+            onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
+            rows={4}
+            className="w-full px-4 py-3 bg-white rounded-lg text-neutral-900 placeholder-neutral-500"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={formData.newsletter}
+            onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+            className="w-4 h-4 rounded"
+          />
+          <label>Keep me updated about Uniquers</label>
         </div>
         <Button
           type="submit"
           variant="primary"
           size="lg"
-          className="w-full"
-          icon={<Send className="h-5 w-5" />}
+          className="w-full bg-gradient-to-r from-[#7C5CFC] to-[#31B7F0]"
+          icon={<ArrowRight className="h-5 w-5" />}
+          iconPosition="right"
         >
-          Send Message
+          Get Early Access
         </Button>
       </div>
     </motion.form>
