@@ -5,12 +5,18 @@ import { ChevronRight, Sparkles } from 'lucide-react';
 
 // ContactForm component (replace with your actual form)
 const ContactForm = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Add form submission logic
+    console.log('Form submitted');
+  };
+
   return (
-    <form className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <input type="text" placeholder="Your Name" className="p-2 rounded bg-neutral-800 text-white" />
       <input type="email" placeholder="Your Email" className="p-2 rounded bg-neutral-800 text-white" />
       <textarea placeholder="Your Message" className="p-2 rounded bg-neutral-800 text-white"></textarea>
-      <Button variant="primary" size="lg" withGlow>
+      <Button type="submit" variant="primary" size="lg" withGlow>
         Submit
       </Button>
     </form>
