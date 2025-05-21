@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
-import { ChevronRight, BrainCircuit, Layers, Clock, DollarSign } from 'lucide-react';
+import { ChevronRight, BrainCircuit, Layers, Clock, DollarSign, X } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -20,6 +20,8 @@ const itemVariants = {
 };
 
 export const HeroSection = () => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="min-h-screen pt-20 overflow-hidden relative">
       {/* Background Gradient */}
@@ -71,13 +73,13 @@ export const HeroSection = () => {
               icon={<ChevronRight className="h-5 w-5" />}
               iconPosition="right"
               onClick={() => {
-                const contactSection = document.getElementById('contact-section');
-                contactSection?.scrollIntoView({ behavior: 'smooth' });
+                const joinForm = document.getElementById('join-form');
+                joinForm?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               Contact Us
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" onClick={() => setShowModal(true)}>
               Watch Demo
             </Button>
           </motion.div>
@@ -112,6 +114,35 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
       </div>
+      
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-neutral-900 p-8 rounded-xl border border-neutral-800 max-w-md w-full mx-4 relative"
+          >
+            <button 
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <h3 className="text-2xl font-display font-bold mb-4">Coming Soon!</h3>
+            <p className="text-neutral-300 mb-6">
+              We're working on an exciting demo video that will showcase all the amazing features of Uniquers. Stay tuned!
+            </p>
+            <Button 
+              variant="primary" 
+              className="w-full" 
+              onClick={() => setShowModal(false)}
+            >
+              Got it
+            </Button>
+          </motion.div>
+        </div>
+      )}
       
       {/* Curved divider at bottom */}
       <div className="absolute bottom-0 left-0 right-0">
