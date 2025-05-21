@@ -6,19 +6,19 @@ import { Button } from './ui/Button';
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
-  
+
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
     ['rgba(5, 8, 22, 0)', 'rgba(5, 8, 22, 0.9)']
   );
-  
+
   const backdropBlur = useTransform(
     scrollY,
     [0, 100],
     ['blur(0px)', 'blur(8px)']
   );
-  
+
   const borderColor = useTransform(
     scrollY,
     [0, 100],
@@ -32,7 +32,7 @@ export const Header = () => {
     } else {
       body.style.overflow = 'auto';
     }
-    
+
     return () => {
       body.style.overflow = 'auto';
     };
@@ -124,8 +124,12 @@ export const Header = () => {
             Use Cases
           </a>
           <div className="pt-6">
-            <Button variant="primary" size="lg" withGlow onClick={() => setIsOpen(false)}>
-              Contact Us
+            <Button variant="primary" size="lg" withGlow onClick={() => {
+            setIsOpen(false);
+            document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Contact Us
             </Button>
           </div>
         </div>
