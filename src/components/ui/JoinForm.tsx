@@ -10,6 +10,7 @@ export const JoinForm = () => {
     keepUpdated: false
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
     message: ''
@@ -17,6 +18,8 @@ export const JoinForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     try {
       console.log('Submitting form data:', formData);
       const response = await fetch('http://localhost:3000/api/submit-form', {
@@ -30,37 +33,38 @@ export const JoinForm = () => {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server response error:', errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Server response was not JSON');
-      }
-
       const data = await response.json();
-      console.log('Server response:', data);
 
-      if (data.success) {
-        setSubmitStatus({ success: true, message: data.message || 'Request sent successfully!' });
-        setFormData({
-          fullName: '',
-          email: '',
-          company: '',
-          interests: '',
-          keepUpdated: false
-        }); // Clear the form
-      } else {
-        setSubmitStatus({ success: false, message: data.message || 'Failed to send request' });
-      }
+      // Reset form and show success message
+      setFormData({
+        fullName: '',
+        email: '',
+        company: '',
+        interests: '',
+        keepUpdated: false
+      });
+
+      setSubmitStatus({ 
+        success: true, 
+        message: data.message || 'Request sent successfully!' 
+      });
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ success: false, message: '' });
+      }, 5000);
+
     } catch (error: any) {
       console.error('Form submission error:', error);
       setSubmitStatus({ 
         success: false, 
         message: `An error occurred: ${error.message || 'Unknown error'}` 
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -123,13 +127,20 @@ export const JoinForm = () => {
           <label htmlFor="keepUpdated">Keep me updated about Uniquers</label>
         </div>
 
-        {submitStatus.message && (
-          <div className={`text-center p-3 rounded ${submitStatus.success ? 'bg-success-500/20 text-success-400' : 'bg-error-500/20 text-error-400'}`}>
-            {submitStatus.message}
+        {showSuccess && (
+          <div className="text-center p-3 rounded bg-success-500/20 text-success-400">
+            Thanks! We'll get back to you soon.
           </div>
         )}
-        <Button type="submit" variant="primary" className="w-full" withGlow>
-          Join Uniquers Today
+
+        <Button 
+          type="submit" 
+          variant="primary" 
+          className="w-full" 
+          withGlow
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Sending..." : "Join Uniquers Today"}
         </Button>
       </form>
     </div>

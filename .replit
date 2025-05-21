@@ -12,26 +12,22 @@ build = ["sh", "-c", "npm run build"]
 localPort = 5173
 externalPort = 80
 
-[[ports]]
-localPort = 5174
-externalPort = 3000
-
-[[ports]]
-localPort = 5175
-externalPort = 3001
-
 [workflows]
-runButton = "Dev Server"
+runButton = "Project"
 
 [[workflows.workflow]]
-name = "Dev Server"
-author = 36632687
-mode = "sequential"
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npx ts-node-dev --respawn src/server.ts"
