@@ -43,17 +43,29 @@ app.post('/api/subscribe', async (req, res) => {
       [fullName, email, company, interests, keepUpdated]
     );
     
-    return res.json({ 
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(200).json({ 
       success: true, 
       message: 'Thank you for subscribing!' 
     });
   } catch (error) {
     console.error('Error saving subscriber:', error);
+    res.setHeader('Content-Type', 'application/json');
     return res.status(500).json({ 
       success: false, 
       message: 'Failed to save your information.' 
     });
   }
+});
+
+// Add error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.setHeader('Content-Type', 'application/json');
+  res.status(500).json({
+    success: false,
+    message: 'An unexpected error occurred'
+  });
 });
 
 app.listen(3000, '0.0.0.0', () => {
