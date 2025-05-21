@@ -8,5 +8,5 @@
       "module": "ESNext", // or "ES6"
       "target": "ESNext", // or the desired target version
       "moduleResolution": "node"
-    }
+  }
 }
