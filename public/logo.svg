@@ -1,0 +1,33 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200">
+  <!-- Person icon with square frame -->
+  <g filter="url(#neon-glow)">
+    <!-- Square frame -->
+    <path d="M 50 30 L 150 30 L 150 130 L 50 130 Z" fill="none" stroke="#00E0FF" stroke-width="8" stroke-linejoin="round"/>
+    <!-- Top left corner accent -->
+    <path d="M 50 30 L 50 50 M 50 30 L 70 30" stroke="#FF5277" stroke-width="8" stroke-linecap="round"/>
+    <!-- Bottom right corner accent -->
+    <path d="M 150 110 L 150 130 M 130 130 L 150 130" stroke="#BE4BDB" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Stick figure -->
+    <circle cx="100" cy="60" r="15" fill="none" stroke="#00E0FF" stroke-width="8"/>
+    <path d="M 100 75 L 100 95 M 80 115 L 100 95 L 120 115" fill="none" stroke="#00E0FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- UNIQUERS text -->
+  <text x="200" y="100" fill="#00E0FF" font-family="Arial, sans-serif" font-size="80" font-weight="bold">UNIQUERS</text>
+
+  <!-- Neon glow filter -->
+  <defs>
+    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#00E0FF" flood-opacity="0.5" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
