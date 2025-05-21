@@ -70,7 +70,16 @@ export const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center">
-          {/* Contact button removed */}
+          <Button 
+            variant="primary" 
+            size="lg" 
+            withGlow 
+            onClick={() => {
+              document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Contact Us
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
