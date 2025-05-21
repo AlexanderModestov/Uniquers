@@ -1,3 +1,4 @@
+
 import express from 'express';
 import { Pool } from 'pg';
 import cors from 'cors';
@@ -61,8 +62,6 @@ app.post('/api/submit-form', async (req, res) => {
       [fullName, email, company, interests, keepUpdated]
     );
     
-    console.log('Successfully inserted:', result.rows[0]);
-    
     return res.status(200).json({ 
       success: true, 
       message: 'Thank you for subscribing!' 
@@ -77,6 +76,6 @@ app.post('/api/submit-form', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
-}); 
+});
