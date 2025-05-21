@@ -28,17 +28,31 @@ pool.query(`
 `);
 
 app.post('/api/subscribe', async (req, res) => {
-  const { fullName, email, company, interests, keepUpdated } = req.body;
-  
   try {
+    const { fullName, email, company, interests, keepUpdated } = req.body;
+    
+    if (!fullName || !email) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Name and email are required.' 
+      });
+    }
+    
     await pool.query(
       'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5)',
       [fullName, email, company, interests, keepUpdated]
     );
-    res.json({ success: true, message: 'Thank you for subscribing!' });
+    
+    return res.json({ 
+      success: true, 
+      message: 'Thank you for subscribing!' 
+    });
   } catch (error) {
     console.error('Error saving subscriber:', error);
-    res.status(500).json({ success: false, message: 'Failed to save your information.' });
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Failed to save your information.' 
+    });
   }
 });
 
