@@ -30,20 +30,20 @@ export const JoinForm = () => {
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server response error:', errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      let data;
       const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
+      if (!contentType || !contentType.includes('application/json')) {
         throw new Error('Server response was not JSON');
       }
 
+      const data = await response.json();
       console.log('Server response:', data);
 
-      if (response.ok) {
+      if (data.success) {
         setSubmitStatus({ success: true, message: data.message || 'Request sent successfully!' });
         setFormData({
           fullName: '',

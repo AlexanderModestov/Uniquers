@@ -6,10 +6,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+
+// CORS configuration
 app.use(cors({
-  origin: true,
-  credentials: true
+  origin: ['http://localhost:5173', 'https://80b41d26-52e4-495f-98b3-622efa33fec0-00-2ydcycu2n5f8x.riker.replit.dev'],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Accept']
 }));
+
 app.use(express.json());
 
 // Database connection
@@ -49,16 +54,17 @@ pool.query(`
 });
 
 app.post('/api/submit-form', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  
   try {
     console.log('Received request body:', req.body);
     const { fullName, email, company, interests, keepUpdated } = req.body;
     
     if (!fullName || !email) {
-      res.status(400).json({ 
+      return res.status(400).json({ 
         success: false, 
         message: 'Name and email are required.' 
       });
-      return;
     }
     
     const result = await pool.query(
@@ -68,13 +74,13 @@ app.post('/api/submit-form', async (req, res) => {
     
     console.log('Successfully inserted:', result.rows[0]);
     
-    res.status(200).json({ 
+    return res.status(200).json({ 
       success: true, 
       message: 'Thank you for subscribing!' 
     });
   } catch (error) {
     console.error('Error saving subscriber:', error);
-    res.status(500).json({ 
+    return res.status(500).json({ 
       success: false, 
       message: 'Failed to save your information.' 
     });
@@ -84,7 +90,8 @@ app.post('/api/submit-form', async (req, res) => {
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('Server error:', err);
-  res.status(500).json({
+  res.setHeader('Content-Type', 'application/json');
+  return res.status(500).json({
     success: false,
     message: 'An unexpected error occurred'
   });
