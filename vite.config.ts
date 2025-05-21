@@ -8,4 +8,12 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react', 'react-hook-form'],
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5173
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 5173
+  }
 });
