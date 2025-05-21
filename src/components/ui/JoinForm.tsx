@@ -19,14 +19,19 @@ export const JoinForm = () => {
     e.preventDefault();
     try {
       console.log('Submitting form data:', formData);
-      const response = await fetch('/api/submit-form', {
+      const response = await fetch('http://localhost:3000/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       let data;
       const contentType = response.headers.get('content-type');
