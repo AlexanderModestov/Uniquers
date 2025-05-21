@@ -72,10 +72,7 @@ export const HeroSection = () => {
               withGlow 
               icon={<ChevronRight className="h-5 w-5" />}
               iconPosition="right"
-              onClick={() => {
-                const joinForm = document.getElementById('join-form');
-                joinForm?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => {}}
             >
               Contact Us
             </Button>

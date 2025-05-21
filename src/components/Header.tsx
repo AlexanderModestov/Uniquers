@@ -74,9 +74,7 @@ export const Header = () => {
             variant="primary" 
             size="lg" 
             withGlow 
-            onClick={() => {
-              document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => {}}
           >
             Contact Us
           </Button>
