@@ -50,7 +50,7 @@ export const Header = () => {
     >
       <div className="container mx-auto flex items-center justify-between">
         <a href="#" className="flex items-center">
-          <img src="/src/assets/logo.svg" alt="Uniquers" className="h-10" />
+          <img src="/logo.svg" alt="Uniquers" className="h-10" />
         </a>
 
         {/* Desktop Navigation */}
