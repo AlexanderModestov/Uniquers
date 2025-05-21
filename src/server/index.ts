@@ -51,24 +51,25 @@ app.post('/api/submit-form', async (req, res) => {
     const { fullName, email, company, interests, keepUpdated } = req.body;
     
     if (!fullName || !email) {
-      return res.status(400).json({ 
+      res.status(400).json({ 
         success: false, 
         message: 'Name and email are required.' 
       });
+      return;
     }
     
-    const result = await pool.query(
+    await pool.query(
       'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [fullName, email, company, interests, keepUpdated]
     );
     
-    return res.status(200).json({ 
+    res.status(200).json({ 
       success: true, 
       message: 'Thank you for subscribing!' 
     });
   } catch (error) {
     console.error('Error saving subscriber:', error);
-    return res.status(500).json({ 
+    res.status(500).json({ 
       success: false, 
       message: 'Failed to save your information.' 
     });
