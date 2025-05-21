@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { Pool } from 'pg';
 import cors from 'cors';
@@ -48,6 +47,7 @@ pool.query(`
 
 app.post('/api/submit-form', async (req, res) => {
   try {
+    console.log('Received request body:', req.body);
     const { fullName, email, company, interests, keepUpdated } = req.body;
     
     if (!fullName || !email) {
@@ -58,10 +58,12 @@ app.post('/api/submit-form', async (req, res) => {
       return;
     }
     
-    await pool.query(
+    const result = await pool.query(
       'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [fullName, email, company, interests, keepUpdated]
     );
+    
+    console.log('Successfully inserted:', result.rows[0]);
     
     res.status(200).json({ 
       success: true, 
@@ -74,6 +76,15 @@ app.post('/api/submit-form', async (req, res) => {
       message: 'Failed to save your information.' 
     });
   }
+});
+
+// Error handling middleware
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('Server error:', err);
+  res.status(500).json({
+    success: false,
+    message: 'An unexpected error occurred'
+  });
 });
 
 const PORT = process.env.PORT || 3000;

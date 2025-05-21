@@ -22,12 +22,20 @@ export const JoinForm = () => {
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData)
       });
 
-      const data = await response.json();
+      let data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        throw new Error('Server response was not JSON');
+      }
+
       console.log('Server response:', data);
 
       if (response.ok) {
