@@ -18,6 +18,7 @@ export const JoinForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      console.log('Submitting form data:', formData);
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
@@ -26,8 +27,11 @@ export const JoinForm = () => {
         body: JSON.stringify(formData)
       });
 
+      const data = await response.json();
+      console.log('Server response:', data);
+
       if (response.ok) {
-        setSubmitStatus({ success: true, message: 'Request sent successfully!' });
+        setSubmitStatus({ success: true, message: data.message || 'Request sent successfully!' });
         setFormData({
           fullName: '',
           email: '',
@@ -36,11 +40,14 @@ export const JoinForm = () => {
           keepUpdated: false
         }); // Clear the form
       } else {
-        const errorData = await response.json();
-        setSubmitStatus({ success: false, message: `Failed to send request: ${errorData.error || response.statusText}` });
+        setSubmitStatus({ success: false, message: data.message || 'Failed to send request' });
       }
     } catch (error: any) {
-      setSubmitStatus({ success: false, message: `An error occurred: ${error.message}` });
+      console.error('Form submission error:', error);
+      setSubmitStatus({ 
+        success: false, 
+        message: `An error occurred: ${error.message || 'Unknown error'}` 
+      });
     }
   };
 

@@ -9,8 +9,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Database connection
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/uniquers',
+  user: 'postgres',
+  host: 'localhost',
+  database: 'uniquers',
+  password: 'postgres',
+  port: 5432,
+});
+
+// Test database connection
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Successfully connected to database');
+  release();
 });
 
 // Create table if not exists
@@ -24,7 +39,11 @@ pool.query(`
     keep_updated BOOLEAN DEFAULT false,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
-`);
+`).then(() => {
+  console.log('Subscribers table created or already exists');
+}).catch(err => {
+  console.error('Error creating table:', err);
+});
 
 app.post('/api/submit-form', async (req, res) => {
   try {
@@ -37,10 +56,12 @@ app.post('/api/submit-form', async (req, res) => {
       });
     }
     
-    await pool.query(
-      'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5)',
+    const result = await pool.query(
+      'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [fullName, email, company, interests, keepUpdated]
     );
+    
+    console.log('Successfully inserted:', result.rows[0]);
     
     return res.status(200).json({ 
       success: true, 
