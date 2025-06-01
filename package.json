@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@supabase/supabase-js": "^2.49.8",
     "@types/express": "^5.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",

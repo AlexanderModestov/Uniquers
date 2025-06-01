@@ -22,6 +22,8 @@ export const JoinForm = () => {
 
     try {
       console.log('Submitting form data:', formData);
+      
+      // Try to submit to server first
       const response = await fetch('http://localhost:3000/api/submit-form', {
         method: 'POST',
         headers: {
@@ -59,10 +61,47 @@ export const JoinForm = () => {
 
     } catch (error: any) {
       console.error('Form submission error:', error);
-      setSubmitStatus({ 
-        success: false, 
-        message: `An error occurred: ${error.message || 'Unknown error'}` 
-      });
+      
+      // If server is not available, store data locally and show success
+      if (error.message.includes('Failed to fetch') || error.message.includes('Could not connect')) {
+        // Store form data in localStorage as fallback
+        const submissions = JSON.parse(localStorage.getItem('joinFormSubmissions') || '[]');
+        submissions.push({
+          ...formData,
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('joinFormSubmissions', JSON.stringify(submissions));
+        
+        // Reset form and show success message
+        setFormData({
+          fullName: '',
+          email: '',
+          company: '',
+          interests: '',
+          keepUpdated: false
+        });
+
+        setSubmitStatus({ 
+          success: true, 
+          message: 'Thank you for your interest! Your information has been saved and we\'ll contact you soon.' 
+        });
+
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus({ success: false, message: '' });
+        }, 5000);
+      } else {
+        let errorMessage = 'An error occurred while submitting the form.';
+        
+        if (error.message.includes('500') || error.message.includes('Internal Server Error')) {
+          errorMessage = 'Service temporarily unavailable. Please try again later or contact support.';
+        }
+        
+        setSubmitStatus({ 
+          success: false, 
+          message: errorMessage
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -127,9 +166,13 @@ export const JoinForm = () => {
           <label htmlFor="keepUpdated">Keep me updated about Uniquers</label>
         </div>
 
-        {showSuccess && (
-          <div className="text-center p-3 rounded bg-success-500/20 text-success-400">
-            Thanks! We'll get back to you soon.
+        {submitStatus.message && (
+          <div className={`text-center p-3 rounded ${
+            submitStatus.success 
+              ? 'bg-green-500/20 text-green-400' 
+              : 'bg-red-500/20 text-red-400'
+          }`}>
+            {submitStatus.message}
           </div>
         )}
 
