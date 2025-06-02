@@ -4,6 +4,7 @@ import { HeroSection } from './components/HeroSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { UseCasesSection } from './components/UseCasesSection';
 import { BenefitsSection } from './components/BenefitsSection';
+import { JoinList } from './components/JoinList';
 import { Footer } from './components/Footer';
 import { JoinForm } from './components/JoinForm';
 
