@@ -26,6 +26,9 @@ export const JoinList = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
+      // Remove the telegram field from the data before sending to Supabase
+      const { telegram, ...supabaseData } = data;
+      
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/potential_customers`, {
         method: 'POST',
         headers: {
@@ -33,7 +36,7 @@ export const JoinList = () => {
           'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(supabaseData),
       });
 
       if (!response.ok) {
