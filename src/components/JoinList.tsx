@@ -7,7 +7,6 @@ import { Button } from './ui/Button';
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
   telegram: z.string().optional(),
   message: z.string().optional(),
   subscribed: z.boolean().default(true),
@@ -77,19 +76,6 @@ export const JoinList = () => {
           />
           {errors.email && (
             <p className="mt-1 text-sm text-error-400">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block mb-2">Phone</label>
-          <input
-            type="tel"
-            placeholder="Enter your phone number"
-            className="w-full px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700 focus:border-primary-500 focus:outline-none"
-            {...register('phone')}
-          />
-          {errors.phone && (
-            <p className="mt-1 text-sm text-error-400">{errors.phone.message}</p>
           )}
         </div>
 
