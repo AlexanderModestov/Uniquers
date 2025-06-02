@@ -6,7 +6,7 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { BenefitsSection } from './components/BenefitsSection';
 import { JoinList } from './components/JoinList';
 import { Footer } from './components/Footer';
-import { JoinForm } from './components/JoinForm';
+import { JoinForm } from './components/ui/JoinForm';
 
 function App() {
   const [form, setForm] = useState({
