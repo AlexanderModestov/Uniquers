@@ -24,7 +24,7 @@ export const JoinForm = () => {
       console.log('Submitting form data:', formData);
       
       // Try to submit to server first
-      const response = await fetch('http://localhost:3000/api/submit-form', {
+      const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
