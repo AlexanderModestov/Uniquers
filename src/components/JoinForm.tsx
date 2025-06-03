@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { Check } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
 interface FormData {
   name: string;
@@ -33,16 +34,22 @@ export const JoinForm = () => {
     setError(null);
     
     try {
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      // Insert data into Supabase 'potential_customers' table
+      const { error: supabaseError } = await supabase
+        .from('potential_customers')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            telegram: formData.telegram,
+            message: formData.message,
+            subscribed: formData.updates
+          }
+        ]);
       
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+      if (supabaseError) {
+        throw new Error(supabaseError.message);
       }
       
       setIsSubmitted(true);
@@ -55,6 +62,7 @@ export const JoinForm = () => {
         updates: false
       });
     } catch (err) {
+      console.error('Error submitting form:', err);
       setError('Failed to submit form. Please try again.');
     } finally {
       setIsSubmitting(false);
