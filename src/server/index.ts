@@ -17,41 +17,56 @@ app.use(cors({
 
 app.use(express.json());
 
-// Database connection
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'uniquers',
-  password: 'postgres',
-  port: 5432,
-});
+// Database connection with fallback
+let pool: Pool | null = null;
+let dbConnected = false;
 
-// Test database connection
-pool.connect((err, client, release) => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-    return;
-  }
-  console.log('Successfully connected to database');
-  release();
-});
+try {
+  pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'uniquers',
+    password: 'postgres',
+    port: 5432,
+  });
 
-// Create table if not exists
-pool.query(`
-  CREATE TABLE IF NOT EXISTS subscribers (
-    id SERIAL PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    company VARCHAR(255),
-    interests TEXT,
-    keep_updated BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  );
-`).then(() => {
-  console.log('Subscribers table created or already exists');
-}).catch(err => {
-  console.error('Error creating table:', err);
-});
+  // Test database connection
+  pool.connect((err, client, release) => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      console.log('Running without database - submissions will be logged only');
+      dbConnected = false;
+      return;
+    }
+    console.log('Successfully connected to database');
+    dbConnected = true;
+    release();
+  });
+} catch (error) {
+  console.error('Failed to initialize database pool:', error);
+  console.log('Running without database - submissions will be logged only');
+  dbConnected = false;
+}
+
+// Create table if not exists (only if database is connected)
+if (pool && dbConnected) {
+  pool.query(`
+    CREATE TABLE IF NOT EXISTS subscribers (
+      id SERIAL PRIMARY KEY,
+      full_name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      company VARCHAR(255),
+      interests TEXT,
+      keep_updated BOOLEAN DEFAULT false,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `).then(() => {
+    console.log('Subscribers table created or already exists');
+  }).catch(err => {
+    console.error('Error creating table:', err);
+    dbConnected = false;
+  });
+}
 
 app.post('/api/submit-form', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -67,12 +82,24 @@ app.post('/api/submit-form', async (req, res) => {
       });
     }
     
-    const result = await pool.query(
-      'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [fullName, email, company, interests, keepUpdated]
-    );
-    
-    console.log('Successfully inserted:', result.rows[0]);
+    if (pool && dbConnected) {
+      const result = await pool.query(
+        'INSERT INTO subscribers (full_name, email, company, interests, keep_updated) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [fullName, email, company, interests, keepUpdated]
+      );
+      
+      console.log('Successfully inserted:', result.rows[0]);
+    } else {
+      // Fallback: just log the submission
+      console.log('Database not available - logging submission:', {
+        fullName,
+        email,
+        company,
+        interests,
+        keepUpdated,
+        timestamp: new Date().toISOString()
+      });
+    }
     
     return res.status(200).json({ 
       success: true, 
