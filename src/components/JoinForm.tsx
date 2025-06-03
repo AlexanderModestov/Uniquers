@@ -33,24 +33,41 @@ export const JoinForm = () => {
     setIsSubmitting(true);
     setError(null);
     
+    // Check if Supabase URL and key are configured
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+      console.error('Supabase environment variables are not configured properly');
+      setError('Database connection error. Please contact the administrator.');
+      setIsSubmitting(false);
+      return;
+    }
+    
     try {
+      console.log('Submitting form data to Supabase:', {
+        ...formData,
+        updates: formData.updates // logging for debugging
+      });
+      
       // Insert data into Supabase 'potential_customers' table
-      const { error: supabaseError } = await supabase
+      const { data, error: supabaseError } = await supabase
         .from('potential_customers')
         .insert([
           {
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
-            telegram: formData.telegram,
-            message: formData.message,
+            telegram: formData.telegram || null, // Handle empty string
+            message: formData.message || null, // Handle empty string
             subscribed: formData.updates
           }
-        ]);
+        ])
+        .select();
       
       if (supabaseError) {
+        console.error('Supabase error:', supabaseError);
         throw new Error(supabaseError.message);
       }
+      
+      console.log('Form submission successful:', data);
       
       setIsSubmitted(true);
       setFormData({
