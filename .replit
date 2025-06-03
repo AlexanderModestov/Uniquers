@@ -1,11 +1,11 @@
 modules = ["nodejs-20", "web"]
-run = "npm run dev"
+run = "npm run dev:all"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "npm run dev"]
+run = ["sh", "-c", "npm run dev:all"]
 
 [[ports]]
 localPort = 5173
@@ -33,7 +33,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev"
+args = "npm run dev:all"
 
 [[workflows.workflow]]
 name = "Start Backend Server"
