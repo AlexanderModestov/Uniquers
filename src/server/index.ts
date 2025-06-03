@@ -22,13 +22,21 @@ let pool: Pool | null = null;
 let dbConnected = false;
 
 try {
-  pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'uniquers',
-    password: 'postgres',
-    port: 5432,
-  });
+  // Use DATABASE_URL if available, otherwise fall back to individual connection parameters
+  if (process.env.DATABASE_URL) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    });
+  } else {
+    pool = new Pool({
+      user: process.env.DB_USER || 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      database: process.env.DB_NAME || 'uniquers',
+      password: process.env.DB_PASSWORD || 'postgres',
+      port: parseInt(process.env.DB_PORT || '5432', 10),
+    });
+  }
 
   // Test database connection
   pool.connect((err, client, release) => {
@@ -128,4 +136,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
- 
