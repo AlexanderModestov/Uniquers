@@ -6,7 +6,6 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { BenefitsSection } from './components/BenefitsSection';
 import { JoinList } from './components/JoinList';
 import { Footer } from './components/Footer';
-import { JoinForm } from './components/ui/JoinForm';
 
 function App() {
   const [form, setForm] = useState({
@@ -57,11 +56,6 @@ function App() {
         <FeaturesSection />
         <UseCasesSection />
         <BenefitsSection />
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-6 md:px-12">
-            <JoinForm />
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
