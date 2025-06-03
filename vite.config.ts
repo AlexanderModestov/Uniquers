@@ -14,6 +14,9 @@ export default defineConfig({
       host: '0.0.0.0'
     },
     allowedHosts: 'all',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
