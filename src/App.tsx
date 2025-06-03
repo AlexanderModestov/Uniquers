@@ -6,6 +6,7 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { BenefitsSection } from './components/BenefitsSection';
 import { JoinList } from './components/JoinList';
 import { Footer } from './components/Footer';
+import { JoinForm } from './components/JoinForm';
 
 function App() {
   const [form, setForm] = useState({
@@ -56,6 +57,7 @@ function App() {
         <FeaturesSection />
         <UseCasesSection />
         <BenefitsSection />
+        <JoinForm />
       </main>
       <Footer />
     </div>

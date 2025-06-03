@@ -25,6 +25,14 @@ export const Header = () => {
     ['rgba(49, 49, 66, 0)', 'rgba(49, 49, 66, 0.5)']
   );
 
+  const scrollToJoinForm = () => {
+    const element = document.getElementById('join-form');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const body = document.body;
     if (isOpen) {
@@ -74,7 +82,7 @@ export const Header = () => {
             variant="primary" 
             size="lg" 
             withGlow 
-            onClick={() => {}}
+            onClick={scrollToJoinForm}
           >
             Contact Us
           </Button>
@@ -131,12 +139,13 @@ export const Header = () => {
             Use Cases
           </a>
           <div className="pt-6">
-            <Button variant="primary" size="lg" withGlow onClick={() => {
-            setIsOpen(false);
-            document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          Contact Us
+            <Button 
+              variant="primary" 
+              size="lg" 
+              withGlow 
+              onClick={scrollToJoinForm}
+            >
+              Contact Us
             </Button>
           </div>
         </div>

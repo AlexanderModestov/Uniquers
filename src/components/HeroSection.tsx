@@ -22,6 +22,13 @@ const itemVariants = {
 export const HeroSection = () => {
   const [showModal, setShowModal] = useState(false);
 
+  const scrollToJoinForm = () => {
+    const element = document.getElementById('join-form');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen pt-20 overflow-hidden relative">
       {/* Background Gradient */}
@@ -72,7 +79,7 @@ export const HeroSection = () => {
               withGlow 
               icon={<ChevronRight className="h-5 w-5" />}
               iconPosition="right"
-              onClick={() => {}}
+              onClick={scrollToJoinForm}
             >
               Contact Us
             </Button>
