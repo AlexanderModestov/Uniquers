@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { JoinListForm } from './components/JoinListForm';
 
 const JoinPage: React.FC = () => {
   return (
@@ -17,8 +18,8 @@ const JoinPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <div>
-          {/* Removed JoinListForm */}
+        <div className="container mx-auto px-6 py-12">
+          <JoinListForm />
         </div>
       </main>
       <Footer />
