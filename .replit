@@ -1,11 +1,12 @@
-modules = ["nodejs-20", "web"]
-run = "npm run dev:all"
+modules = ["nodejs-20", "web", "postgresql-16"]
+run = "npm run dev"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "npm run dev:all"]
+run = ["sh", "-c", "npm run preview"]
+build = ["sh", "-c", "npm run build"]
 
 [[ports]]
 localPort = 5173
@@ -15,6 +16,22 @@ externalPort = 80
 localPort = 5174
 externalPort = 3000
 
+[[ports]]
+localPort = 5175
+externalPort = 3001
+
+[workflows]
+runButton = "Dev Server"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = 36632687
+mode = "sequential"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev:all"
+args = "npm run dev"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx ts-node-dev --respawn src/server.ts"
