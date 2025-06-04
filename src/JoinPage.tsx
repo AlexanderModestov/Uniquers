@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { JoinListForm } from './components/JoinListForm';
 
 const JoinPage: React.FC = () => {
   return (
@@ -18,7 +17,9 @@ const JoinPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <JoinListForm />
+        <div>
+          {/* Removed JoinListForm */}
+        </div>
       </main>
       <Footer />
     </div>
