@@ -15,7 +15,7 @@ export default defineConfig({
       host: 'localhost'
     },
     allowedHosts: [
-      '92cf39d7-48d9-4fa1-82f9-0192f2e3545a-00-o8wi3egusfbz.janeway.replit.dev',
+      '19029bb6-96d3-4e3f-a70d-891fb196e9b8-00-38lckmsbikts5.spock.replit.dev',
       'all'
     ],
     headers: {
