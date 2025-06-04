@@ -15,31 +15,6 @@ externalPort = 80
 localPort = 5174
 externalPort = 3000
 
-[workflows]
-runButton = "Project"
-
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Start application"
-
-[[workflows.workflow]]
-name = "Start application"
-author = "agent"
-
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev:all"
-
-[[workflows.workflow]]
-name = "Start Backend Server"
-author = 36632687
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd src/server && npx tsx index.ts"
