@@ -16,6 +16,8 @@ export default defineConfig({
     },
     allowedHosts: [
       '19029bb6-96d3-4e3f-a70d-891fb196e9b8-00-38lckmsbikts5.spock.replit.dev',
+      'uniquers-aleksandrmodest.replit.app',
+      'uniquers.us',
       'all'
     ],
     headers: {
