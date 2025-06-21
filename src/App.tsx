@@ -4,6 +4,7 @@ import { HeroSection } from './components/HeroSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { UseCasesSection } from './components/UseCasesSection';
 import { BenefitsSection } from './components/BenefitsSection';
+import { TariffsSection } from './components/TariffsSection';
 import { JoinListForm } from './components/JoinListForm';
 import { Footer } from './components/Footer';
 
@@ -16,6 +17,7 @@ function App() {
         <FeaturesSection />
         <UseCasesSection />
         <BenefitsSection />
+        <TariffsSection />
         <section id="join-form" className="py-20 bg-background relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-12">
             <div className="text-center mb-16">
