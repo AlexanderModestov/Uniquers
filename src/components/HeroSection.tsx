@@ -58,8 +58,6 @@ export const HeroSection = () => {
             variants={itemVariants}
           >
             Monetize Your Expertise
-            <br />
-            <span className="text-white">Without Selling Your Time</span>
           </motion.h1>
           
           <motion.p
