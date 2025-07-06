@@ -37,45 +37,38 @@ export const FeaturesSection = () => {
   const expertFeatures = [
     {
       icon: <Database className="h-6 w-6 text-white" />,
-      title: "Content Management",
-      description: "Upload, organize, and tag your specialized knowledge in various formats.",
+      title: "Understands Your Content",
+      description: "Analyzes your blog posts, webinars, scripts, and chats to build a comprehensive knowledge base.",
       color: "bg-primary-500/20 border border-primary-500/30",
       delay: 0.1
     },
     {
-      icon: <Upload className="h-6 w-6 text-white" />,
-      title: "Multi-Format Support",
-      description: "Share text, PDFs, videos, or automatically convert text to audio.",
+      icon: <MessageSquare className="h-6 w-6 text-white" />,
+      title: "Automated Responses",
+      description: "Generates intelligent responses to client questions based on your expertise.",
       color: "bg-secondary-500/20 border border-secondary-500/30",
       delay: 0.2
     },
     {
-      icon: <Tags className="h-6 w-6 text-white" />,
-      title: "Content Tagging",
-      description: "Organize with categories and tags for efficient knowledge management.",
+      icon: <Upload className="h-6 w-6 text-white" />,
+      title: "Tailored Landing Pages",
+      description: "Creates custom landing pages that showcase your services and expertise.",
       color: "bg-accent-500/20 border border-accent-500/30",
       delay: 0.3
     },
     {
-      icon: <BarChart className="h-6 w-6 text-white" />,
-      title: "Analytics Dashboard",
-      description: "Track content performance and user engagement in real-time.",
+      icon: <FileText className="h-6 w-6 text-white" />,
+      title: "Content Publishing",
+      description: "Sends newsletters and publishes social posts based on your existing content.",
       color: "bg-success-500/20 border border-success-500/30",
       delay: 0.4
     },
     {
       icon: <Calendar className="h-6 w-6 text-white" />,
-      title: "Appointment System",
-      description: "Configure your calendar, set pricing, and manage bookings.",
+      title: "Works 24/7",
+      description: "Operates continuously — even when you're offline — to serve your clients.",
       color: "bg-warning-500/20 border border-warning-500/30",
       delay: 0.5
-    },
-    {
-      icon: <DollarSign className="h-6 w-6 text-white" />,
-      title: "Monetization Tools",
-      description: "Set subscription tiers and control access to premium content.",
-      color: "bg-primary-500/20 border border-primary-500/30",
-      delay: 0.6
     },
   ];
 
@@ -139,48 +132,17 @@ export const FeaturesSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            One Platform, <span className="text-primary-400">Unlimited Possibilities</span>
+            What <span className="text-primary-400">Uniquers</span> Does
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
-            Uniquers combines expert knowledge management, client access controls, and AI-powered assistance
-            into one seamless platform that works for both experts and their clients.
+            Uniquers automates and streamlines your expertise to help you scale your business and serve more clients.
           </p>
         </motion.div>
         
-        <div className="mb-20">
-          <motion.h3 
-            className="text-2xl font-display font-semibold mb-8 relative pl-4 border-l-4 border-primary-500"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span id="experts">For Experts</span>
-          </motion.h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {expertFeatures.map((feature, index) => (
-              <FeatureCard key={index} {...feature} />
-            ))}
-          </div>
-        </div>
-        
-        <div>
-          <motion.h3 
-            className="text-2xl font-display font-semibold mb-8 relative pl-4 border-l-4 border-secondary-500"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span id="clients">For Clients</span>
-          </motion.h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clientFeatures.map((feature, index) => (
-              <FeatureCard key={index} {...feature} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {expertFeatures.map((feature, index) => (
+            <FeatureCard key={index} {...feature} />
+          ))}
         </div>
       </div>
     </section>

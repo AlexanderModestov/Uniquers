@@ -58,15 +58,13 @@ export const HeroSection = () => {
             variants={itemVariants}
           >
             Monetize Your Expertise
-            <br />
-            <span className="text-white">Without Selling Your Time</span>
           </motion.h1>
           
           <motion.p
             className="text-lg md:text-xl text-neutral-300 max-w-2xl mb-8"
             variants={itemVariants}
           >
-            Uniquers is a specialized platform that helps remote specialists automate repetitive aspects of their work while creating new revenue streams from their knowledge.
+            Uniquers helps you launch and grow your online presence — with a custom landing page, smart client communication, and automated content workflows.
           </motion.p>
           
           <motion.div

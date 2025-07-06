@@ -6,46 +6,55 @@ import {
   Clock4, Sparkles, DollarSign, Check, MessageSquare
 } from 'lucide-react';
 
-interface BenefitItemProps {
+interface OfferItemProps {
   icon: React.ReactNode;
   title: string;
+  description: string;
   delay: number;
 }
 
-const BenefitItem: React.FC<BenefitItemProps> = ({ icon, title, delay }) => {
+const OfferItem: React.FC<OfferItemProps> = ({ icon, title, description, delay }) => {
   return (
     <motion.div 
-      className="flex items-center space-x-3 mb-6"
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      className="bg-neutral-900/60 backdrop-blur-sm border border-neutral-800/50 rounded-xl p-6 mb-6 hover:border-primary-500/50 transition-all duration-300"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.4, delay }}
     >
-      <div className="bg-primary-500/10 rounded-full p-2 flex items-center justify-center">
-        {icon}
+      <div className="flex items-start space-x-4">
+        <div className="bg-primary-500/10 rounded-full p-3 flex items-center justify-center">
+          {icon}
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-display font-semibold mb-3">{title}</h3>
+          <p className="text-neutral-400 leading-relaxed">{description}</p>
+        </div>
       </div>
-      <span>{title}</span>
     </motion.div>
   );
 };
 
 export const BenefitsSection = () => {
-  const expertBenefits = [
-    { icon: <Coins className="h-5 w-5 text-primary-400" />, title: "Passive income generation", delay: 0.1 },
-    { icon: <Clock className="h-5 w-5 text-primary-400" />, title: "Reduced repetitive explanations", delay: 0.2 },
-    { icon: <Users className="h-5 w-5 text-primary-400" />, title: "Expanded client reach", delay: 0.3 },
-    { icon: <BarChart3 className="h-5 w-5 text-primary-400" />, title: "Data-driven content improvement", delay: 0.4 },
-    { icon: <CalendarClock className="h-5 w-5 text-primary-400" />, title: "Streamlined appointment management", delay: 0.5 },
-    { icon: <MessageSquare className="h-5 w-5 text-primary-400" />, title: "Efficient client communication", delay: 0.6 },
-  ];
-
-  const clientBenefits = [
-    { icon: <Database className="h-5 w-5 text-secondary-400" />, title: "24/7 access to expert knowledge", delay: 0.1 },
-    { icon: <Clock4 className="h-5 w-5 text-secondary-400" />, title: "Self-paced learning", delay: 0.2 },
-    { icon: <DollarSign className="h-5 w-5 text-secondary-400" />, title: "Cost-effective access to expertise", delay: 0.3 },
-    { icon: <Check className="h-5 w-5 text-secondary-400" />, title: "Consistent information quality", delay: 0.4 },
-    { icon: <CalendarClock className="h-5 w-5 text-secondary-400" />, title: "Easy booking process", delay: 0.5 },
-    { icon: <Sparkles className="h-5 w-5 text-secondary-400" />, title: "AI-powered assistance", delay: 0.6 },
+  const offers = [
+    { 
+      icon: <Database className="h-5 w-5 text-primary-400" />, 
+      title: "Personalized, High-Converting Landing Pages",
+      description: "These serve as a digital front door for experts, effectively showcasing their main services and aiming to convert prospective visitors into engaged clients. They are crucial for projecting the expert's personal credibility, unique value proposition, and trustworthiness, with a focus on amplifying the expert's unique personal brand.",
+      delay: 0.1 
+    },
+    { 
+      icon: <MessageSquare className="h-5 w-5 text-primary-400" />, 
+      title: "RAG-Powered Communication System",
+      description: "This robust system is designed to automate responses to routine and frequently asked client questions, thereby significantly freeing up the expert's valuable time. It enhances information retrieval by providing precise, thorough, and accurate answers based on a centralized, continually updated knowledge base of expert information. A crucial human-in-the-loop (HITL) process ensures accuracy, handles subjective nuance, and maintains ethical compliance.",
+      delay: 0.2 
+    },
+    { 
+      icon: <Sparkles className="h-5 w-5 text-primary-400" />, 
+      title: "AI-Driven Content Generation",
+      description: "This capability empowers experts to efficiently produce a wide array of content formats, scaling their knowledge dissemination beyond traditional one-on-one interactions.",
+      delay: 0.3 
+    },
   ];
 
   return (
@@ -63,50 +72,17 @@ export const BenefitsSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Benefits for <span className="text-primary-400">Everyone</span>
+            <span className="text-primary-400">Offers</span>
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
-            Uniquers creates value for both experts and their clients by bridging the gap between
-            one-on-one consultation and scalable knowledge distribution.
+            Uniquers offers three core capabilities designed to help experts monetize their knowledge and scale their impact.
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div>
-            <motion.h3 
-              className="text-2xl font-display font-semibold mb-8 relative pl-4 border-l-4 border-primary-500"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              For Experts
-            </motion.h3>
-            
-            <div>
-              {expertBenefits.map((benefit, index) => (
-                <BenefitItem key={index} {...benefit} />
-              ))}
-            </div>
-          </div>
-          
-          <div>
-            <motion.h3 
-              className="text-2xl font-display font-semibold mb-8 relative pl-4 border-l-4 border-secondary-500"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              For Clients
-            </motion.h3>
-            
-            <div>
-              {clientBenefits.map((benefit, index) => (
-                <BenefitItem key={index} {...benefit} />
-              ))}
-            </div>
-          </div>
+        <div className="max-w-4xl mx-auto">
+          {offers.map((offer, index) => (
+            <OfferItem key={index} {...offer} />
+          ))}
         </div>
       </div>
     </section>

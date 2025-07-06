@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from './ui/Card';
 import { 
-  Brain, Briefcase, Dumbbell, Languages
+  Brain, Briefcase, Dumbbell, Languages, Scale
 } from 'lucide-react';
 
 interface UseCaseCardProps {
@@ -37,6 +37,9 @@ const UseCaseCard: React.FC<UseCaseCardProps> = ({
           <h3 className="text-xl font-display font-semibold">{title}</h3>
         </div>
         <p className="text-neutral-300 mb-4">{description}</p>
+        <div className="mb-3">
+          <h4 className="text-primary-400 font-semibold text-sm mb-2">How Uniquers Helps:</h4>
+        </div>
         <ul className="space-y-2">
           {examples.map((example, i) => (
             <li key={i} className="flex items-start">
@@ -54,51 +57,62 @@ export const UseCasesSection = () => {
   const useCases = [
     {
       icon: <Brain className="h-6 w-6 text-white" />,
-      title: "Therapists & Coaches",
-      description: "Expand your practice beyond one-on-one sessions.",
+      title: "Therapist or Coach",
+      description: "Problem: Constantly answering the same client questions, hard to keep up with content marketing.",
       examples: [
-        "Share therapeutic techniques and exercises",
-        "Distribute self-help materials to clients",
-        "Create premium content packages for specific issues",
-        "Automate answers to common therapy questions"
+        "Builds a landing page that highlights their approach, credentials, and booking options",
+        "AI chatbot answers FAQs about pricing, scheduling, and methodology",
+        "Publishes weekly posts based on their existing notes and webinars",
+        "Sends personalized email digests to leads and clients"
       ],
       color: "bg-primary-500/20 border border-primary-500/30"
     },
     {
-      icon: <Briefcase className="h-6 w-6 text-white" />,
-      title: "Business Consultants",
-      description: "Scale your consulting business with digital knowledge products.",
+      icon: <Scale className="h-6 w-6 text-white" />,
+      title: "Legal or Tax Consultant",
+      description: "Problem: Too much time spent on repetitive communication and not enough on client work.",
       examples: [
-        "Share industry reports and market analyses",
-        "Create methodology documentation for clients",
-        "Build case study libraries with controlled access",
-        "Offer premium templates and frameworks"
+        "Creates a clean, professional landing page with service tiers and intake forms",
+        "Automates responses to common questions about services, deadlines, and regulations",
+        "Generates LinkedIn and blog content from previous cases or public webinars",
+        "Builds trust through consistent expert content"
       ],
       color: "bg-secondary-500/20 border border-secondary-500/30"
     },
     {
       icon: <Dumbbell className="h-6 w-6 text-white" />,
-      title: "Fitness Trainers",
-      description: "Help clients train effectively between personal sessions.",
+      title: "Nutritionist or Fitness Expert",
+      description: "Problem: Struggling to keep clients engaged between sessions and grow their audience.",
       examples: [
-        "Create workout routines and video demonstrations",
-        "Share nutritional guidance and meal plans",
-        "Develop progress tracking tools for clients",
-        "Build exercise libraries with proper form tutorials"
+        "Turns session notes and guides into a chatbot that answers client questions",
+        "Publishes weekly tips to Instagram, Facebook, and newsletters automatically",
+        "Landing page collects leads and encourages bookings for consultations or programs"
       ],
       color: "bg-accent-500/20 border border-accent-500/30"
     },
     {
-      icon: <Languages className="h-6 w-6 text-white" />,
-      title: "Language Tutors",
-      description: "Support student learning beyond scheduled lessons.",
+      icon: <Briefcase className="h-6 w-6 text-white" />,
+      title: "Freelancer or Creative Professional",
+      description: "Problem: Online presence is fragmented and managing outreach is time-consuming.",
       examples: [
-        "Distribute lesson materials and practice exercises",
-        "Create pronunciation guides and audio samples",
-        "Share culture and context resources",
-        "Build vocabulary lists with learning tools"
+        "Generates a sleek, branded landing page with portfolio highlights and inquiry form",
+        "Answers common questions about pricing, process, and availability",
+        "Repackages past projects and testimonials into shareable posts and newsletters",
+        "Helps nurture leads with automated, friendly follow-ups"
       ],
       color: "bg-success-500/20 border border-success-500/30"
+    },
+    {
+      icon: <Languages className="h-6 w-6 text-white" />,
+      title: "Language Tutor or Online Educator",
+      description: "Problem: Wants to grow passive income and reduce manual teaching prep.",
+      examples: [
+        "Landing page promotes lessons, courses, and downloadable materials",
+        "Chatbot answers questions about schedules, pricing, and topics",
+        "Converts lesson transcripts into educational blog posts and email content",
+        "Scales presence on social and email with zero extra time"
+      ],
+      color: "bg-warning-500/20 border border-warning-500/30"
     }
   ];
 
@@ -116,7 +130,7 @@ export const UseCasesSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Perfect For <span className="text-secondary-400">Every Expert</span>
+            <span className="text-secondary-400">Cases</span>
           </h2>
           <p className="text-neutral-400 max-w-2xl mx-auto">
             See how different specialists are using Uniquers to transform their practice
@@ -124,7 +138,7 @@ export const UseCasesSection = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {useCases.map((useCase, index) => (
             <UseCaseCard 
               key={index} 
